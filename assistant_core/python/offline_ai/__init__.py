@@ -2,6 +2,7 @@
 
 from .chemistry import concentration_molar, estimate_gas_pressure_atm, predict_reaction
 from .daily_update_service import DailyUpdateState, load_state, run_daily_update_if_due, save_state
+from .local_api import OfflineApiApp, create_server
 from .market_updater import SnapshotUpdateResult, merge_market_feed, refresh_market_snapshot
 from .orchestrator import OfflineAssistantOrchestrator
 from .physics import (
@@ -23,8 +24,10 @@ __all__ = [
     "CommandEnvelope",
     "DailyMidnightUpdatePolicy",
     "DailyUpdateState",
+    "OfflineApiApp",
     "OfflineAssistantOrchestrator",
     "SnapshotUpdateResult",
+    "create_server",
     "concentration_molar",
     "de_broglie_wavelength_m",
     "drag_force_newtons",

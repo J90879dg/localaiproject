@@ -30,6 +30,7 @@ python3 -m unittest discover -s tests -p "test_*.py"
 - `offline_ai.market_updater`
 - `offline_ai.daily_update_service`
 - `offline_ai.update_scheduler`
+- `offline_ai.local_api`
 
 ## Scan + Worth Example
 
@@ -61,3 +62,16 @@ python3 tools/run_daily_market_refresh.py
 
 The script checks whether the local timezone has crossed midnight and refreshes
 `data/market_values.json` from local feed files when due.
+
+## Local API Server
+
+```bash
+cd assistant_core/python
+python3 tools/run_local_api_server.py --host 127.0.0.1 --port 8765
+```
+
+This exposes offline endpoints for:
+- scan + worth
+- project planning
+- experiment simulation
+- daily refresh trigger
