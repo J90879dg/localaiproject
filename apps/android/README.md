@@ -67,3 +67,13 @@ Expected outputs:
 - Professional dark gradient dashboard style
 - Glass-like cards for status panels
 - Ready for avatar and 3D scene overlays
+
+## Build (Android)
+
+```bash
+cd apps/android
+./gradlew :app:assembleDebug
+```
+
+If Gradle wrapper files are not present yet, open this folder in Android Studio and
+run a Gradle sync once to generate local project metadata.

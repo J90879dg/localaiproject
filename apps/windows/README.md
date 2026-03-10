@@ -53,3 +53,13 @@ desktop/src/main/kotlin/com/localaiproject/windows/
 
 - Professional dashboard state model for polished desktop rendering
 - Structured panel layout for update status, valuation status, and lab readiness
+
+## Build (Windows Desktop JVM)
+
+```bash
+cd apps/windows
+./gradlew run
+```
+
+If Gradle wrapper files are not present yet, run with a local Gradle install or
+generate wrapper files once from an IDE/CI bootstrap environment.

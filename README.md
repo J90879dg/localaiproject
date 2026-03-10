@@ -62,6 +62,13 @@ cd assistant_core/python
 python3 tools/run_daily_market_refresh.py
 ```
 
+App build commands:
+
+```bash
+cd apps/android && ./gradlew :app:assembleDebug
+cd apps/windows && ./gradlew run
+```
+
 ## Next Build Targets
 
 1. Build Android UI shell (voice, text, camera/image import, avatar canvas).
