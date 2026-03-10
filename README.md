@@ -47,6 +47,7 @@ docs/
 - Unit tests for deterministic offline behavior
 - Android and Windows shell code split into separate feature places
 - Professional dashboard UI scaffolds for Android and Windows experiences
+- Local offline HTTP API bridge for scan, planning, simulation, and refresh
 
 ## Quick Start (Offline Core)
 
@@ -68,6 +69,16 @@ App build commands:
 cd apps/android && ./gradlew :app:assembleDebug
 cd apps/windows && ./gradlew run
 ```
+
+Start offline API bridge:
+
+```bash
+./scripts/start_offline_api.sh
+```
+
+API reference:
+- `docs/offline_api.md`
+- `docs/mvp_release.md`
 
 ## Next Build Targets
 

@@ -25,6 +25,7 @@ desktop/src/main/kotlin/com/localaiproject/windows/
   DesktopMain.kt
   core/
     client/LocalBridgeClient.kt
+    client/LocalOfflineApiClient.kt
     model/DesktopModels.kt
   ui/
     DesktopVisualStyle.kt
@@ -42,6 +43,9 @@ desktop/src/main/kotlin/com/localaiproject/windows/
 - Signed request envelopes
 - Strict permission scopes (no implicit remote control)
 - Tamper-evident activity logs
+
+MVP transport:
+- `LocalOfflineApiClient` uses local API at `http://127.0.0.1:8765`
 
 ## Daily Update Requirement
 
@@ -63,3 +67,9 @@ cd apps/windows
 
 If Gradle wrapper files are not present yet, run with a local Gradle install or
 generate wrapper files once from an IDE/CI bootstrap environment.
+
+Before running live scans/plans/simulations, start local API:
+
+```bash
+./scripts/start_offline_api.sh
+```

@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit
 class DailyUpdateScheduler {
     fun scheduleEveryMidnight(
         context: Context,
+        apiBaseUrl: String = "http://127.0.0.1:8765",
         pythonExecutable: String = "python3",
         scriptPath: String? = null,
         workingDirectory: String? = null
@@ -33,6 +34,7 @@ class DailyUpdateScheduler {
             .build()
 
         val inputData: Data = Data.Builder()
+            .putString(DailyUpdateWorker.KEY_API_BASE_URL, apiBaseUrl)
             .putString(DailyUpdateWorker.KEY_PYTHON_EXECUTABLE, pythonExecutable)
             .putString(DailyUpdateWorker.KEY_SCRIPT_PATH, resolvedScriptPath)
             .putString(DailyUpdateWorker.KEY_WORKING_DIRECTORY, resolvedWorkingDirectory)

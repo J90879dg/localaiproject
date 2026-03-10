@@ -1,6 +1,8 @@
 package com.localaiproject.windows
 
+import com.localaiproject.shared.contracts.ExperimentRequestPayload
 import com.localaiproject.windows.core.client.LocalBridgeClient
+import com.localaiproject.windows.core.client.LocalOfflineApiClient
 import com.localaiproject.windows.feature.scan_value.DesktopScanValueCoordinator
 import com.localaiproject.windows.feature.update.WindowsDailyUpdateCoordinator
 import com.localaiproject.windows.feature.update.WindowsDailyUpdateRunner
@@ -14,6 +16,7 @@ fun main() {
     check(state.androidConnected)
 
     val projectRoot = File(".").absoluteFile
+    val apiBaseUrl = "http://127.0.0.1:8765"
     val pythonExecutable = "python3"
     val scriptPath = File(projectRoot, "assistant_core/python/tools/run_daily_market_refresh.py").absolutePath
     val workingDirectory = File(projectRoot, "assistant_core/python").absolutePath
@@ -29,6 +32,7 @@ fun main() {
 
     val updateRunner = WindowsDailyUpdateRunner()
     val updateResult = updateRunner.runNow(
+        apiBaseUrl = apiBaseUrl,
         pythonExecutable = pythonExecutable,
         scriptPath = scriptPath,
         workingDirectory = workingDirectory
@@ -37,12 +41,29 @@ fun main() {
     println(updateResult.output)
 
     val visionLabelProvider = LocalVisionLabelProvider()
-    val scanValue = DesktopScanValueCoordinator()
+    val scanValue = DesktopScanValueCoordinator(LocalOfflineApiClient(apiBaseUrl))
     val valueResult = scanValue.estimateWorth(
         labels = visionLabelProvider.extractLabels(imagePath = "golf_sample_image.png"),
         hint = "used golf ball lot"
     )
     println(valueResult.message)
+
+    val apiClient = LocalOfflineApiClient(apiBaseUrl)
+    val plan = apiClient.planProject("Build a compact chemistry demo bench")
+    if (plan != null) {
+        println("Project plan generated with ${plan.steps.size} steps.")
+    }
+    val experiment = apiClient.runExperiment(
+        ExperimentRequestPayload(
+            userGoal = "Run safe neutralization simulation",
+            domain = "chemistry",
+            reactants = listOf("HCl", "NaOH"),
+            conditions = mapOf("temperature_c" to 25.0)
+        )
+    )
+    if (experiment != null) {
+        println("Experiment summary: ${experiment.summary}")
+    }
 
     val dashboard = ProfessionalDesktopDashboard()
     val visualState = dashboard.buildState(

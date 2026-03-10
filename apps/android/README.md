@@ -50,6 +50,9 @@ Android sends normalized payloads to shared offline core:
 - experiment/project context
 - policy and safety preference flags
 
+Primary transport in MVP:
+- `OfflineCoreClient` -> local API at `http://127.0.0.1:8765`
+
 Expected outputs:
 - step-by-step guidance
 - predictive outcomes
@@ -77,3 +80,9 @@ cd apps/android
 
 If Gradle wrapper files are not present yet, open this folder in Android Studio and
 run a Gradle sync once to generate local project metadata.
+
+Before running live scans/plans/simulations, start local API:
+
+```bash
+./scripts/start_offline_api.sh
+```

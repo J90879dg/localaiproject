@@ -71,6 +71,7 @@
 - Local-only discovery (USB or LAN)
 - Signed/verified command envelopes
 - Capability-scoped permissions (typing/clicking/app control optional)
+- Local HTTP API bridge (`/api/*`) for app clients to call offline core
 
 ### F. Security + Privacy
 - Encrypted local databases and logs

@@ -33,11 +33,18 @@ To keep the system expandable and secure, capabilities are isolated into separat
 - Location: `assistant_core/python/offline_ai/protocol.py`
 - Responsibility: signed command envelopes and verification for Android↔Windows
 
-## 6) App Client Places
+## 6) Local API Bridge Place
+- Location:
+  - `assistant_core/python/offline_ai/local_api.py`
+  - `assistant_core/python/tools/run_local_api_server.py`
+  - `docs/offline_api.md`
+- Responsibility: unified local HTTP interface for scan/value, planning, simulation, refresh
+
+## 7) App Client Places
 - Android shell: `apps/android/app/src/main/java/com/localaiproject/android/...`
 - Windows shell: `apps/windows/desktop/src/main/kotlin/com/localaiproject/windows/...`
 
-## 7) Visual Experience Place
+## 8) Visual Experience Place
 - Android visual layer:
   - `apps/android/app/src/main/java/com/localaiproject/android/ui/...`
 - Windows visual layer:

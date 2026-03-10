@@ -14,6 +14,7 @@ class DailyUpdateWorker(
 
     override suspend fun doWork(): Result {
         val config = UpdateExecutionConfig(
+            apiBaseUrl = inputData.getString(KEY_API_BASE_URL) ?: "http://127.0.0.1:8765",
             pythonExecutable = inputData.getString(KEY_PYTHON_EXECUTABLE) ?: "python3",
             scriptPath = inputData.getString(KEY_SCRIPT_PATH)
                 ?: "${applicationContext.filesDir.absolutePath}/offline_core/tools/run_daily_market_refresh.py",
@@ -44,6 +45,7 @@ class DailyUpdateWorker(
     }
 
     companion object {
+        const val KEY_API_BASE_URL = "api_base_url"
         const val KEY_PYTHON_EXECUTABLE = "python_executable"
         const val KEY_SCRIPT_PATH = "script_path"
         const val KEY_WORKING_DIRECTORY = "working_directory"
