@@ -31,6 +31,10 @@ app/src/main/java/com/localaiproject/android/
     chat/ChatCoordinator.kt
     lab/LabSessionCoordinator.kt
     scan_value/ScanValueCoordinator.kt
+    update/DailyUpdateScheduler.kt
+    update/DailyUpdateWorker.kt
+    vision/ImageLabelProvider.kt
+    vision/TfliteImageLabelProvider.kt
 ```
 
 ## Integration Contract
@@ -47,3 +51,8 @@ Expected outputs:
 - safety warnings
 - suggested materials/tools
 - scan-based item identification with local worth estimates
+
+## Daily Update Requirement
+
+- `DailyUpdateScheduler` configures WorkManager for **every day at 12:00 AM local time**.
+- `DailyUpdateWorker` is the hook point to run local market snapshot refresh.

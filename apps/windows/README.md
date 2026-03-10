@@ -29,6 +29,8 @@ desktop/src/main/kotlin/com/localaiproject/windows/
   feature/
     control/ControlCoordinator.kt
     scan_value/DesktopScanValueCoordinator.kt
+    update/WindowsDailyUpdateCoordinator.kt
+    vision/LocalVisionLabelProvider.kt
 ```
 
 ## Security Expectations
@@ -36,3 +38,8 @@ desktop/src/main/kotlin/com/localaiproject/windows/
 - Signed request envelopes
 - Strict permission scopes (no implicit remote control)
 - Tamper-evident activity logs
+
+## Daily Update Requirement
+
+- `WindowsDailyUpdateCoordinator` builds a task command for **daily 12:00 AM local execution**.
+- Point task execution to `assistant_core/python/tools/run_daily_market_refresh.py`.
