@@ -18,6 +18,19 @@ desktop/
   storage/            # Encrypted logs + local profile cache
 ```
 
+Current shell files are split by feature (separate places):
+
+```text
+desktop/src/main/kotlin/com/localaiproject/windows/
+  DesktopMain.kt
+  core/
+    client/LocalBridgeClient.kt
+    model/DesktopModels.kt
+  feature/
+    control/ControlCoordinator.kt
+    scan_value/DesktopScanValueCoordinator.kt
+```
+
 ## Security Expectations
 - Local-only communication (USB or LAN)
 - Signed request envelopes

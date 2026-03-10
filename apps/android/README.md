@@ -19,6 +19,20 @@ app/
   storage/            # Encrypted local persistence + logs
 ```
 
+Current shell files are split by feature (separate places):
+
+```text
+app/src/main/java/com/localaiproject/android/
+  MainActivity.kt
+  core/
+    client/OfflineCoreClient.kt
+    model/UiModels.kt
+  feature/
+    chat/ChatCoordinator.kt
+    lab/LabSessionCoordinator.kt
+    scan_value/ScanValueCoordinator.kt
+```
+
 ## Integration Contract
 
 Android sends normalized payloads to shared offline core:
@@ -32,3 +46,4 @@ Expected outputs:
 - predictive outcomes
 - safety warnings
 - suggested materials/tools
+- scan-based item identification with local worth estimates
