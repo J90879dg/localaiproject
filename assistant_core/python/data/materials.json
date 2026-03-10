@@ -1,0 +1,87 @@
+{
+  "general": {
+    "items": [
+      "safety goggles",
+      "protective gloves",
+      "notebook",
+      "digital multimeter"
+    ],
+    "default_steps": [
+      "Define measurable objective and constraints.",
+      "Select materials and verify compatibility.",
+      "Run a simulated trial before real execution.",
+      "Record observations and iterate."
+    ],
+    "cautions": [
+      "Validate safety protocol before each iteration."
+    ]
+  },
+  "chemistry": {
+    "items": [
+      "beaker set",
+      "graduated cylinder",
+      "pH strips",
+      "distilled water"
+    ],
+    "default_steps": [
+      "Identify reactants and expected products.",
+      "Estimate concentrations and volume requirements.",
+      "Simulate reaction under target conditions.",
+      "Document risks and mitigation protocols."
+    ],
+    "cautions": [
+      "Handle corrosives in a ventilated area."
+    ]
+  },
+  "electronics": {
+    "items": [
+      "breadboard",
+      "jumper wires",
+      "resistor kit",
+      "9V battery"
+    ],
+    "default_steps": [
+      "Draft circuit schematic.",
+      "Compute expected current and power.",
+      "Assemble prototype with current limiting.",
+      "Test and log readings."
+    ],
+    "cautions": [
+      "Avoid short circuits and overheated components."
+    ]
+  },
+  "mechanics": {
+    "items": [
+      "small DC motor",
+      "gear set",
+      "bearing kit",
+      "mounting brackets"
+    ],
+    "default_steps": [
+      "Define required torque and speed.",
+      "Select transmission and support structure.",
+      "Run kinematics simulation.",
+      "Prototype and tune."
+    ],
+    "cautions": [
+      "Shield moving parts during testing."
+    ]
+  },
+  "aerodynamics": {
+    "items": [
+      "foam board",
+      "propeller set",
+      "brushless motor",
+      "ESC controller"
+    ],
+    "default_steps": [
+      "Estimate lift and drag targets.",
+      "Set power-to-weight design goals.",
+      "Simulate airflow behavior at expected velocities.",
+      "Prototype and validate with controlled tests."
+    ],
+    "cautions": [
+      "Keep clear of spinning propellers."
+    ]
+  }
+}
