@@ -12,7 +12,10 @@ from .physics import (
 )
 from .planner import load_material_catalog, suggest_items_for_goal
 from .protocol import CommandEnvelope, sign_envelope, verify_envelope
+from .scanner import ScanAliasMatcher, load_scan_aliases
 from .safety import evaluate_chemistry_safety
+from .update_scheduler import NightlyUpdatePolicy
+from .valuation import estimate_item_worth, load_market_snapshot
 
 __all__ = [
     "CommandEnvelope",
@@ -29,6 +32,11 @@ __all__ = [
     "magnetic_force_newtons",
     "predict_reaction",
     "sign_envelope",
+    "ScanAliasMatcher",
     "suggest_items_for_goal",
     "verify_envelope",
+    "estimate_item_worth",
+    "load_market_snapshot",
+    "load_scan_aliases",
+    "NightlyUpdatePolicy",
 ]

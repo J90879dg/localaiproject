@@ -29,3 +29,32 @@ class ProjectPlan:
     recommended_items: list[str]
     steps: list[str]
     cautions: list[str] = field(default_factory=list)
+
+
+@dataclass(slots=True)
+class ScanRequest:
+    image_labels: list[str] = field(default_factory=list)
+    typed_hint: str = ""
+    include_second_hand: bool = True
+    region: str = "us"
+
+
+@dataclass(slots=True)
+class IdentifiedItem:
+    canonical_name: str
+    confidence: float
+    matched_aliases: list[str] = field(default_factory=list)
+
+
+@dataclass(slots=True)
+class ValuationResult:
+    item_name: str
+    region: str
+    currency: str
+    low_estimate: float
+    mid_estimate: float
+    high_estimate: float
+    data_timestamp_unix: int
+    source: str
+    assumptions: list[str] = field(default_factory=list)
+    notes: list[str] = field(default_factory=list)

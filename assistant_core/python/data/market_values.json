@@ -1,0 +1,41 @@
+{
+  "source": "offline_local_market_snapshot",
+  "timestamp_unix": 1773091200,
+  "regions": {
+    "us": {
+      "currency": "USD",
+      "items": {
+        "golf ball": {
+          "category": "sports",
+          "new_mid": 2.2,
+          "used_mid": 0.7,
+          "spread_pct": 0.45
+        },
+        "basketball": {
+          "category": "sports",
+          "new_mid": 29.0,
+          "used_mid": 16.0,
+          "spread_pct": 0.35
+        },
+        "multimeter": {
+          "category": "electronics_tool",
+          "new_mid": 34.0,
+          "used_mid": 22.0,
+          "spread_pct": 0.3
+        },
+        "dc motor": {
+          "category": "project_part",
+          "new_mid": 18.0,
+          "used_mid": 9.0,
+          "spread_pct": 0.4
+        },
+        "beaker set": {
+          "category": "lab_equipment",
+          "new_mid": 28.0,
+          "used_mid": 19.0,
+          "spread_pct": 0.25
+        }
+      }
+    }
+  }
+}

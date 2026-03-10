@@ -63,6 +63,7 @@
 
 ### D. Knowledge + Planning
 - Local catalog of materials, tools, and build parts
+- Local market snapshot for item worth estimation from scans/text (e.g., golf balls)
 - Goal decomposition into steps, dependencies, and risk warnings
 - Predictive outcomes with confidence and assumptions
 
@@ -75,6 +76,7 @@
 - Encrypted local databases and logs
 - Voice authentication hook points
 - Tamper-evident activity logs
+- Optional nightly local snapshot refresh policy (00:00 UTC by default)
 
 ## 4) Safety and Governance
 

@@ -1,10 +1,11 @@
 from __future__ import annotations
 
+from dataclasses import asdict
 from pathlib import Path
 from typing import Any
 
 from .chemistry import estimate_gas_pressure_atm, predict_reaction
-from .models import ExperimentRequest, SimulationResult
+from .models import ExperimentRequest, ScanRequest, SimulationResult
 from .physics import (
     drag_force_newtons,
     electric_current_amps,
@@ -12,14 +13,26 @@ from .physics import (
     lorentz_factor,
 )
 from .planner import load_material_catalog, suggest_items_for_goal
+from .scanner import ScanAliasMatcher, load_scan_aliases
 from .safety import evaluate_chemistry_safety
+from .valuation import estimate_item_worth, load_market_snapshot
 
 
 class OfflineAssistantOrchestrator:
     """Offline orchestrator for simulation and project planning requests."""
 
-    def __init__(self, catalog_path: Path):
+    def __init__(
+        self,
+        catalog_path: Path,
+        market_snapshot_path: Path | None = None,
+        scan_aliases_path: Path | None = None,
+    ):
         self.catalog = load_material_catalog(catalog_path)
+        self.market_snapshot = (
+            load_market_snapshot(market_snapshot_path) if market_snapshot_path else None
+        )
+        aliases = load_scan_aliases(scan_aliases_path) if scan_aliases_path else {}
+        self.scan_matcher = ScanAliasMatcher(aliases=aliases)
 
     def plan_project(self, goal: str) -> dict[str, Any]:
         plan = suggest_items_for_goal(goal, self.catalog)
@@ -43,6 +56,34 @@ class OfflineAssistantOrchestrator:
             assumptions=["Domain router currently supports chemistry and physics."],
             warnings=[],
         )
+
+    def scan_and_value(self, request: ScanRequest) -> dict[str, Any]:
+        identified = self.scan_matcher.identify(request)
+        if identified is None:
+            return {
+                "identified_item": None,
+                "valuation": None,
+                "message": "Unable to confidently identify item from current labels/hints.",
+            }
+
+        if self.market_snapshot is None:
+            return {
+                "identified_item": asdict(identified),
+                "valuation": None,
+                "message": "No local market snapshot configured.",
+            }
+
+        valuation = estimate_item_worth(
+            item_name=identified.canonical_name,
+            snapshot=self.market_snapshot,
+            region=request.region,
+            include_second_hand=request.include_second_hand,
+        )
+        return {
+            "identified_item": asdict(identified),
+            "valuation": asdict(valuation),
+            "message": "Offline scan + worth estimation completed.",
+        }
 
     def _run_chemistry(self, request: ExperimentRequest) -> SimulationResult:
         reaction = predict_reaction(request.reactants, request.conditions)

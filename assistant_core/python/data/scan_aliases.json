@@ -1,0 +1,32 @@
+{
+  "aliases": {
+    "golf ball": [
+      "golf ball",
+      "golfball",
+      "titleist",
+      "prov1",
+      "callaway",
+      "taylormade"
+    ],
+    "basketball": [
+      "basketball",
+      "indoor/outdoor basketball",
+      "nba ball"
+    ],
+    "multimeter": [
+      "multimeter",
+      "digital multimeter",
+      "volt meter"
+    ],
+    "dc motor": [
+      "dc motor",
+      "brushless motor",
+      "electric motor"
+    ],
+    "beaker set": [
+      "beaker",
+      "beaker set",
+      "lab glass"
+    ]
+  }
+}

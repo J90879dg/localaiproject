@@ -39,9 +39,12 @@ docs/
 - Chemistry simulation helpers (reaction heuristics + ideal gas outcome estimates)
 - Physics simulation helpers (mechanics, electricity, magnetism, aerodynamics, relativity, quantum)
 - Local project planner using offline materials/tool database
+- Scan alias matcher from image labels/typed hints
+- Offline market-worth estimator (includes sports items like golf balls) from local snapshot
 - Safety protocol evaluator for chemistry workflows
 - Signed message envelope for secure Android↔Windows command exchange
 - Unit tests for deterministic offline behavior
+- Android and Windows shell code split into separate feature places
 
 ## Quick Start (Offline Core)
 
