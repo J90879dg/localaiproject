@@ -26,10 +26,14 @@ desktop/src/main/kotlin/com/localaiproject/windows/
   core/
     client/LocalBridgeClient.kt
     model/DesktopModels.kt
+  ui/
+    DesktopVisualStyle.kt
+    ProfessionalDesktopDashboard.kt
   feature/
     control/ControlCoordinator.kt
     scan_value/DesktopScanValueCoordinator.kt
     update/WindowsDailyUpdateCoordinator.kt
+    update/WindowsDailyUpdateRunner.kt
     vision/LocalVisionLabelProvider.kt
 ```
 
@@ -42,4 +46,10 @@ desktop/src/main/kotlin/com/localaiproject/windows/
 ## Daily Update Requirement
 
 - `WindowsDailyUpdateCoordinator` builds a task command for **daily 12:00 AM local execution**.
+- `WindowsDailyUpdateRunner` can execute the Python refresh script immediately.
 - Point task execution to `assistant_core/python/tools/run_daily_market_refresh.py`.
+
+## Visual Quality Direction
+
+- Professional dashboard state model for polished desktop rendering
+- Structured panel layout for update status, valuation status, and lab readiness

@@ -82,6 +82,11 @@
 - Runs every day at **12:00 AM local time** via platform scheduler
 - Stores last-success timestamp to prevent duplicate same-day refreshes
 
+### H. Professional Visual Layer
+- Android: Compose theme + gradient/glass dashboard cards
+- Windows: structured dashboard state for polished desktop rendering
+- Shared design language for avatar, lab panels, and status widgets
+
 ## 4) Safety and Governance
 
 For any chemistry/physics workflow:

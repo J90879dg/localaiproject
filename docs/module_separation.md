@@ -37,4 +37,11 @@ To keep the system expandable and secure, capabilities are isolated into separat
 - Android shell: `apps/android/app/src/main/java/com/localaiproject/android/...`
 - Windows shell: `apps/windows/desktop/src/main/kotlin/com/localaiproject/windows/...`
 
+## 7) Visual Experience Place
+- Android visual layer:
+  - `apps/android/app/src/main/java/com/localaiproject/android/ui/...`
+- Windows visual layer:
+  - `apps/windows/desktop/src/main/kotlin/com/localaiproject/windows/ui/...`
+- Responsibility: professional/cool dashboard look and consistent brand feel
+
 This split avoids one giant module and allows each area to evolve independently.

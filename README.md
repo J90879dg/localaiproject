@@ -46,6 +46,7 @@ docs/
 - Signed message envelope for secure Android↔Windows command exchange
 - Unit tests for deterministic offline behavior
 - Android and Windows shell code split into separate feature places
+- Professional dashboard UI scaffolds for Android and Windows experiences
 
 ## Quick Start (Offline Core)
 

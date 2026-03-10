@@ -27,12 +27,17 @@ app/src/main/java/com/localaiproject/android/
   core/
     client/OfflineCoreClient.kt
     model/UiModels.kt
+  ui/
+    ProfessionalDashboardScreen.kt
+    theme/Color.kt
+    theme/Theme.kt
   feature/
     chat/ChatCoordinator.kt
     lab/LabSessionCoordinator.kt
     scan_value/ScanValueCoordinator.kt
     update/DailyUpdateScheduler.kt
     update/DailyUpdateWorker.kt
+    update/PythonDailyUpdateExecutor.kt
     vision/ImageLabelProvider.kt
     vision/TfliteImageLabelProvider.kt
 ```
@@ -55,4 +60,10 @@ Expected outputs:
 ## Daily Update Requirement
 
 - `DailyUpdateScheduler` configures WorkManager for **every day at 12:00 AM local time**.
-- `DailyUpdateWorker` is the hook point to run local market snapshot refresh.
+- `DailyUpdateWorker` runs `run_daily_market_refresh.py` via `PythonDailyUpdateExecutor`.
+
+## Visual Quality Direction
+
+- Professional dark gradient dashboard style
+- Glass-like cards for status panels
+- Ready for avatar and 3D scene overlays
