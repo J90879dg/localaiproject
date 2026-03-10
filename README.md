@@ -41,6 +41,7 @@ docs/
 - Local project planner using offline materials/tool database
 - Scan alias matcher from image labels/typed hints
 - Offline market-worth estimator (includes sports items like golf balls) from local snapshot
+- Daily market snapshot refresh pipeline at 12:00 AM (local-device scheduler hooks)
 - Safety protocol evaluator for chemistry workflows
 - Signed message envelope for secure Android↔Windows command exchange
 - Unit tests for deterministic offline behavior
@@ -50,7 +51,14 @@ docs/
 
 ```bash
 cd assistant_core/python
-python -m unittest discover -s tests -p "test_*.py"
+python3 -m unittest discover -s tests -p "test_*.py"
+```
+
+Daily refresh command:
+
+```bash
+cd assistant_core/python
+python3 tools/run_daily_market_refresh.py
 ```
 
 ## Next Build Targets

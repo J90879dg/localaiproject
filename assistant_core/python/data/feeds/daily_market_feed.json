@@ -1,0 +1,22 @@
+{
+  "feed_source": "local_manual_feed",
+  "regions": {
+    "us": {
+      "currency": "USD",
+      "items": {
+        "golf ball": {
+          "category": "sports",
+          "new_mid": 2.35,
+          "used_mid": 0.8,
+          "spread_pct": 0.45
+        },
+        "multimeter": {
+          "category": "electronics_tool",
+          "new_mid": 36.0,
+          "used_mid": 24.0,
+          "spread_pct": 0.3
+        }
+      }
+    }
+  }
+}

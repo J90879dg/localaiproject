@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 from dataclasses import asdict
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 from .chemistry import estimate_gas_pressure_atm, predict_reaction
+from .daily_update_service import run_daily_update_if_due
+from .market_updater import SnapshotUpdateResult
 from .models import ExperimentRequest, ScanRequest, SimulationResult
 from .physics import (
     drag_force_newtons,
@@ -15,6 +18,7 @@ from .physics import (
 from .planner import load_material_catalog, suggest_items_for_goal
 from .scanner import ScanAliasMatcher, load_scan_aliases
 from .safety import evaluate_chemistry_safety
+from .update_scheduler import DailyMidnightUpdatePolicy
 from .valuation import estimate_item_worth, load_market_snapshot
 
 
@@ -27,6 +31,8 @@ class OfflineAssistantOrchestrator:
         market_snapshot_path: Path | None = None,
         scan_aliases_path: Path | None = None,
     ):
+        self.catalog_path = catalog_path
+        self.market_snapshot_path = market_snapshot_path
         self.catalog = load_material_catalog(catalog_path)
         self.market_snapshot = (
             load_market_snapshot(market_snapshot_path) if market_snapshot_path else None
@@ -84,6 +90,29 @@ class OfflineAssistantOrchestrator:
             "valuation": asdict(valuation),
             "message": "Offline scan + worth estimation completed.",
         }
+
+    def refresh_market_data_if_due(
+        self,
+        state_path: Path,
+        feed_paths: list[Path],
+        now: datetime | None = None,
+        policy: DailyMidnightUpdatePolicy | None = None,
+    ) -> SnapshotUpdateResult | None:
+        if self.market_snapshot_path is None:
+            return None
+        if policy is None:
+            local_tz = datetime.now(tz=timezone.utc).astimezone().tzinfo or timezone.utc
+            policy = DailyMidnightUpdatePolicy(hour=0, minute=0, tz=local_tz)
+        result = run_daily_update_if_due(
+            policy=policy,
+            state_path=state_path,
+            snapshot_path=self.market_snapshot_path,
+            feed_paths=feed_paths,
+            now=now,
+        )
+        if result is not None:
+            self.market_snapshot = load_market_snapshot(self.market_snapshot_path)
+        return result
 
     def _run_chemistry(self, request: ExperimentRequest) -> SimulationResult:
         reaction = predict_reaction(request.reactants, request.conditions)

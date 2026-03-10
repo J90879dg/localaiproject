@@ -76,7 +76,11 @@
 - Encrypted local databases and logs
 - Voice authentication hook points
 - Tamper-evident activity logs
-- Optional nightly local snapshot refresh policy (00:00 UTC by default)
+
+### G. Daily Update Service
+- Local feed import + snapshot merge pipeline
+- Runs every day at **12:00 AM local time** via platform scheduler
+- Stores last-success timestamp to prevent duplicate same-day refreshes
 
 ## 4) Safety and Governance
 

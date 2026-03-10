@@ -1,18 +1,22 @@
 from __future__ import annotations
 
+import json
 import time
 import unittest
 from datetime import datetime, timezone
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 from offline_ai.chemistry import estimate_gas_pressure_atm, predict_reaction
+from offline_ai.daily_update_service import run_daily_update_if_due
+from offline_ai.market_updater import refresh_market_snapshot
 from offline_ai.models import ExperimentRequest, ScanRequest
 from offline_ai.orchestrator import OfflineAssistantOrchestrator
 from offline_ai.physics import electric_current_amps, lorentz_factor
 from offline_ai.protocol import CommandEnvelope, sign_envelope, verify_envelope
 from offline_ai.scanner import ScanAliasMatcher, load_scan_aliases
 from offline_ai.safety import evaluate_chemistry_safety
-from offline_ai.update_scheduler import NightlyUpdatePolicy
+from offline_ai.update_scheduler import DailyMidnightUpdatePolicy, NightlyUpdatePolicy
 from offline_ai.valuation import estimate_item_worth, load_market_snapshot
 
 
@@ -22,6 +26,7 @@ class OfflineAiTests(unittest.TestCase):
         self.catalog_path = root / "data" / "materials.json"
         self.market_snapshot_path = root / "data" / "market_values.json"
         self.scan_aliases_path = root / "data" / "scan_aliases.json"
+        self.daily_feed_path = root / "data" / "feeds" / "daily_market_feed.json"
 
     def test_ideal_gas_pressure(self) -> None:
         pressure = estimate_gas_pressure_atm(moles=1.0, temperature_k=273.15, volume_l=22.414)
@@ -122,6 +127,61 @@ class OfflineAiTests(unittest.TestCase):
         next_run = policy.next_run_after(current)
         self.assertEqual(next_run.hour, 0)
         self.assertEqual(next_run.minute, 0)
+
+    def test_daily_policy_due_at_midnight(self) -> None:
+        policy = DailyMidnightUpdatePolicy(hour=0, minute=0, tz=timezone.utc)
+        current = datetime(2026, 3, 10, 0, 30, tzinfo=timezone.utc)
+        last_run = datetime(2026, 3, 9, 23, 0, tzinfo=timezone.utc)
+        self.assertTrue(policy.is_due(last_run_at=last_run, current_time=current))
+
+    def test_market_refresh_updates_golf_ball_price(self) -> None:
+        with TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            snapshot_copy = temp_root / "market_values.json"
+            feed_copy = temp_root / "daily_market_feed.json"
+
+            snapshot_copy.write_text(self.market_snapshot_path.read_text(encoding="utf-8"), encoding="utf-8")
+            feed_copy.write_text(self.daily_feed_path.read_text(encoding="utf-8"), encoding="utf-8")
+
+            refresh_market_snapshot(
+                snapshot_path=snapshot_copy,
+                feed_paths=[feed_copy],
+                output_path=snapshot_copy,
+                now=datetime(2026, 3, 11, 0, 0, tzinfo=timezone.utc),
+            )
+            updated = json.loads(snapshot_copy.read_text(encoding="utf-8"))
+            golf_ball = updated["regions"]["us"]["items"]["golf ball"]
+            self.assertEqual(golf_ball["new_mid"], 2.35)
+
+    def test_run_daily_update_if_due_runs_once(self) -> None:
+        with TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            snapshot_copy = temp_root / "market_values.json"
+            feed_copy = temp_root / "daily_market_feed.json"
+            state_path = temp_root / "daily_update_state.json"
+
+            snapshot_copy.write_text(self.market_snapshot_path.read_text(encoding="utf-8"), encoding="utf-8")
+            feed_copy.write_text(self.daily_feed_path.read_text(encoding="utf-8"), encoding="utf-8")
+
+            policy = DailyMidnightUpdatePolicy(hour=0, minute=0, tz=timezone.utc)
+            now = datetime(2026, 3, 11, 0, 5, tzinfo=timezone.utc)
+
+            first = run_daily_update_if_due(
+                policy=policy,
+                state_path=state_path,
+                snapshot_path=snapshot_copy,
+                feed_paths=[feed_copy],
+                now=now,
+            )
+            second = run_daily_update_if_due(
+                policy=policy,
+                state_path=state_path,
+                snapshot_path=snapshot_copy,
+                feed_paths=[feed_copy],
+                now=now,
+            )
+            self.assertIsNotNone(first)
+            self.assertIsNone(second)
 
 
 if __name__ == "__main__":

@@ -18,12 +18,22 @@ To keep the system expandable and secure, capabilities are isolated into separat
 - Data:
   - `assistant_core/python/data/scan_aliases.json`
   - `assistant_core/python/data/market_values.json`
+  - `assistant_core/python/data/feeds/daily_market_feed.json`
 
-## 4) Secure Device Bridge Place
+## 4) Daily Update Place
+- Location:
+  - `assistant_core/python/offline_ai/update_scheduler.py`
+  - `assistant_core/python/offline_ai/market_updater.py`
+  - `assistant_core/python/offline_ai/daily_update_service.py`
+  - `assistant_core/python/tools/run_daily_market_refresh.py`
+- Responsibility: refresh local worth data at **12:00 AM every day**
+- State: `assistant_core/python/data/daily_update_state.json`
+
+## 5) Secure Device Bridge Place
 - Location: `assistant_core/python/offline_ai/protocol.py`
 - Responsibility: signed command envelopes and verification for Android↔Windows
 
-## 5) App Client Places
+## 6) App Client Places
 - Android shell: `apps/android/app/src/main/java/com/localaiproject/android/...`
 - Windows shell: `apps/windows/desktop/src/main/kotlin/com/localaiproject/windows/...`
 

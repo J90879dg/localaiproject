@@ -7,13 +7,14 @@ This package provides a deterministic offline baseline for:
 - Scan alias matching from image labels/text hints
 - Offline item worth estimation from local market snapshots
 - Signed command envelopes for cross-device communication
+- Daily market snapshot refresh service (12:00 AM schedule)
 - Orchestration entrypoint combining all core capabilities
 
 ## Run Tests
 
 ```bash
 cd assistant_core/python
-python -m unittest discover -s tests -p "test_*.py"
+python3 -m unittest discover -s tests -p "test_*.py"
 ```
 
 ## Main Entry Points
@@ -26,6 +27,9 @@ python -m unittest discover -s tests -p "test_*.py"
 - `offline_ai.valuation`
 - `offline_ai.protocol`
 - `offline_ai.safety`
+- `offline_ai.market_updater`
+- `offline_ai.daily_update_service`
+- `offline_ai.update_scheduler`
 
 ## Scan + Worth Example
 
@@ -45,3 +49,15 @@ result = orchestrator.scan_and_value(
 )
 print(result)
 ```
+
+## Daily 12:00 AM Refresh
+
+Run this command from your local scheduler (Android worker, Windows task scheduler, cron, etc.):
+
+```bash
+cd assistant_core/python
+python3 tools/run_daily_market_refresh.py
+```
+
+The script checks whether the local timezone has crossed midnight and refreshes
+`data/market_values.json` from local feed files when due.
